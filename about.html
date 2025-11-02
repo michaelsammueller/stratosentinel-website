@@ -304,7 +304,7 @@
             max-width: 1000px;
             margin: 0 auto;
             background: var(--bg);
-            border: 1px solid var(--border);
+            border: 2px solid rgba(141, 27, 61, 0.3);
             border-radius: 16px;
             padding: 3rem;
             position: relative;
@@ -315,44 +315,46 @@
             background: var(--bg);
         }
 
-        /* Qatar Flag Animated Gradient */
+        /* Qatar Flag Animated Gradient - Layer 1 */
         .qatar-section::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 600px;
-            height: 600px;
+            top: -30%;
+            right: -15%;
+            width: 700px;
+            height: 700px;
             background: radial-gradient(
                 circle,
-                rgba(141, 27, 61, 0.08) 0%,
-                rgba(141, 27, 61, 0.05) 30%,
-                rgba(141, 27, 61, 0.02) 50%,
-                transparent 70%
+                rgba(141, 27, 61, 0.05) 0%,
+                rgba(141, 27, 61, 0.03) 25%,
+                rgba(141, 27, 61, 0.02) 40%,
+                transparent 60%
             );
             border-radius: 50%;
-            filter: blur(40px);
-            animation: qatarFloat 18s ease-in-out infinite;
+            filter: blur(80px);
+            animation: qatarFloat 12s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
         }
 
+        /* Qatar Flag Animated Gradient - Layer 2 */
         .qatar-section::after {
             content: '';
             position: absolute;
-            bottom: -40%;
-            left: -20%;
-            width: 500px;
-            height: 500px;
+            bottom: -25%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(
                 circle,
-                rgba(141, 27, 61, 0.06) 0%,
-                rgba(141, 27, 61, 0.03) 40%,
+                rgba(141, 27, 61, 0.04) 0%,
+                rgba(141, 27, 61, 0.025) 30%,
+                rgba(141, 27, 61, 0.015) 50%,
                 transparent 70%
             );
             border-radius: 50%;
-            filter: blur(50px);
-            animation: qatarFloat 15s ease-in-out infinite reverse;
+            filter: blur(70px);
+            animation: qatarFloat 16s ease-in-out infinite reverse;
             pointer-events: none;
             z-index: 0;
         }
@@ -362,13 +364,17 @@
                 transform: translate(0, 0) scale(1);
                 opacity: 1;
             }
-            33% {
-                transform: translate(-20px, 20px) scale(1.05);
-                opacity: 0.8;
-            }
-            66% {
-                transform: translate(15px, -15px) scale(0.95);
+            25% {
+                transform: translate(40px, -30px) scale(1.15);
                 opacity: 0.9;
+            }
+            50% {
+                transform: translate(-30px, 40px) scale(0.9);
+                opacity: 1;
+            }
+            75% {
+                transform: translate(25px, 20px) scale(1.05);
+                opacity: 0.95;
             }
         }
 
@@ -382,6 +388,10 @@
             margin-bottom: 1.5rem;
             font-weight: 700;
             letter-spacing: -1px;
+            background: linear-gradient(135deg, #8D1B3D 0%, #b8254d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .qatar-section p {
@@ -646,7 +656,7 @@
                     </div>
                 </li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="about.html#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -759,19 +769,19 @@
                 <div class="contact-card">
                     <h4>General Inquiries</h4>
                     <p>For sales and general information</p>
-                    <a href="mailto:info@stratosentinel.com">info@stratosentinel.com</a>
+                    <a href="mailto:michael@stratosentinel.com">michael@stratosentinel.com</a>
                 </div>
 
                 <div class="contact-card">
                     <h4>Business Development</h4>
                     <p>For partnership opportunities</p>
-                    <a href="mailto:business@stratosentinel.com">business@stratosentinel.com</a>
+                    <a href="mailto:michael@stratosentinel.com">michael@stratosentinel.com</a>
                 </div>
 
                 <div class="contact-card">
                     <h4>Technical Support</h4>
                     <p>For deployed systems</p>
-                    <a href="mailto:support@stratosentinel.com">support@stratosentinel.com</a>
+                    <a href="mailto:michael@stratosentinel.com">michael@stratosentinel.com</a>
                 </div>
             </div>
 
@@ -817,7 +827,7 @@
             <div class="footer-section">
                 <h4>StratoSentinel</h4>
                 <p>Advanced GNSS network security for critical infrastructure.</p>
-                <p style="margin-top: 1rem;">Developed in Qatar</p>
+                <p style="margin-top: 1rem;">Developed in Qatar 🇶🇦</p>
             </div>
             <div class="footer-section">
                 <h4>Products</h4>
