@@ -54,11 +54,14 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
         }
 
         .nav-links {
@@ -79,6 +82,73 @@
             color: var(--text);
         }
 
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--text);
+            background: var(--bg-subtle);
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -87,38 +157,63 @@
             padding: 8rem 3rem 4rem;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
         }
 
-        /* Animated Gradient Background */
+        /* Animated Gradient Background - Layer 1 */
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                rgba(0, 255, 136, 0.03) 0%,
-                rgba(0, 212, 255, 0.03) 25%,
-                rgba(0, 255, 136, 0.05) 50%,
-                rgba(0, 212, 255, 0.02) 75%,
-                rgba(0, 255, 136, 0.03) 100%
+            top: -50%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 255, 136, 0.15) 0%,
+                rgba(0, 255, 136, 0.08) 25%,
+                rgba(0, 255, 136, 0.03) 50%,
+                transparent 70%
             );
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
             pointer-events: none;
         }
 
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
+        /* Animated Gradient Background - Layer 2 */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 102, 255, 0.12) 0%,
+                rgba(0, 102, 255, 0.06) 30%,
+                rgba(0, 212, 255, 0.04) 50%,
+                transparent 70%
+            );
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 15s ease-in-out infinite reverse;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
             }
-            50% {
-                background-position: 100% 50%;
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+                opacity: 0.8;
             }
-            100% {
-                background-position: 0% 50%;
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+                opacity: 0.9;
             }
         }
 
@@ -126,6 +221,8 @@
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
@@ -256,6 +353,24 @@
             font-size: 0.95rem;
             color: var(--text-light);
             font-weight: 500;
+        }
+
+        /* Footnote */
+        .stats-footnote {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .stats-footnote p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
         }
 
         /* Products Section */
@@ -526,10 +641,18 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">StratoSentinel</a>
+            <a href="index.html" class="logo">
+                <img src="static/sn_logo_black.svg" alt="StratoSentinel">
+            </a>
             <ul class="nav-links">
-                <li><a href="#products">Products</a></li>
-                <li><a href="#features">Features</a></li>
+                <li class="dropdown">
+                    <a href="#products" class="dropdown-toggle">Products</a>
+                    <div class="dropdown-menu">
+                        <a href="stratonode.html">StratoNode</a>
+                        <a href="stratocentral.html">StratoCentral</a>
+                    </div>
+                </li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -538,13 +661,13 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <div class="hero-badge">GNSS Network Security</div>
+            <div class="hero-badge">Trust the Signal</div>
             <h1>
-                Protecting Critical<br>
-                <span class="highlight">Satellite Infrastructure</span>
+                Protecting Airspace<br>
+                <span class="highlight">GNSS Integrity</span>
             </h1>
             <p class="hero-description">
-                Secure your GNSS operations with an advanced ground station network. Real-time RF anomaly detection monitors satellite signals to identify spoofing and jamming before they impact operations.
+                Gain real-time insight into GNSS performance across your airspace, with continous monitoring and instant anomaly alerts. Understand signal behavior, detect disruptions early, and stay ahead of potential risks. Maintain operational clarity and confidence, even in complex RF environments.
             </p>
             <div class="cta-buttons">
                 <a href="#products" class="btn btn-primary">Explore Solutions</a>
@@ -557,11 +680,11 @@
     <section class="stats-section">
         <div class="stats-container">
             <div class="stat">
-                <div class="stat-value">&lt;100ms</div>
+                <div class="stat-value">&lt;500ms*</div>
                 <div class="stat-label">Threat Detection</div>
             </div>
             <div class="stat">
-                <div class="stat-value">8+</div>
+                <div class="stat-value">16+</div>
                 <div class="stat-label">Active Algorithms</div>
             </div>
             <div class="stat">
@@ -573,6 +696,9 @@
                 <div class="stat-label">Monitoring</div>
             </div>
         </div>
+        <div class="stats-footnote">
+            <p>* Detection time varies based on network size and configuration. Multi-node networks with 100+ StratoNodes will still process with a speed of &lt; 500ms</p>
+        </div>
     </section>
 
     <!-- Products Section -->
@@ -581,8 +707,7 @@
             <div class="section-label">Our Solutions</div>
             <h2 class="section-title">Complete GNSS Security Platform</h2>
             <p class="section-description">
-                Distributed ground infrastructure monitors satellite signals across your network, providing centralized threat awareness and response for complete GNSS protection.
-            </p>
+                A coordinated network of ground stations provides continous GNSS signal insight, centralizing awareness and alerts to support confident airspace management and timely operational decisions.
         </div>
         <div class="products-grid">
             <!-- StratoNode Card -->
@@ -591,28 +716,28 @@
                 <h3>StratoNode</h3>
                 <p>Intelligent GNSS relay ground stations that continuously monitor satellite signals and form the foundation of your security network.</p>
                 <ul class="product-features">
-                    <li>Multi-frequency GNSS reception</li>
-                    <li>Satellite signal RF anomaly detection</li>
-                    <li>Real-time threat identification</li>
-                    <li>Network consensus validation</li>
-                    <li>Autonomous operation</li>
+                    <li>Multi-frequency, multi-constellation GNSS reception</li>
+                    <li>Automated data logging and retention</li>
+                    <li>Autonomous operation and repair</li>
+                    <li>High-quality data capture for integrity monitoring</li>
+                    <li>Network-wide signal visibility and coverage expansion</li>
                 </ul>
-                <a href="#" class="product-link">Learn more →</a>
+                <a href="stratonode.html" class="product-link">Learn more →</a>
             </div>
 
             <!-- StratoCentral Card -->
             <div class="product-card">
                 <div class="product-icon">SC</div>
                 <h3>StratoCentral</h3>
-                <p>Centralized web portal for monitoring GNSS integrity across your network with real-time satellite signal analysis and threat detection.</p>
+                <p>Centralized platform for real time GNSS integrity monitoring, providing live network awareness, signal analysis, and automated anomaly detection across all connected sites.</p>
                 <ul class="product-features">
                     <li>Real-time GNSS network visualization</li>
-                    <li>Satellite signal integrity monitoring</li>
-                    <li>Automated threat alerting</li>
-                    <li>Historical data analysis</li>
-                    <li>Multi-site management</li>
+                    <li>Satellite signal integrity analysis</li>
+                    <li>Automated threat alerts and notifications</li>
+                    <li>Historical event review and trend analysis</li>
+                    <li>Scalable multi-site management and coverage</li>
                 </ul>
-                <a href="#" class="product-link">Learn more →</a>
+                <a href="stratocentral.html" class="product-link">Learn more →</a>
             </div>
         </div>
     </section>
@@ -629,27 +754,27 @@
         <div class="features-grid">
             <div class="feature-card">
                 <h4>Network Consensus</h4>
-                <p>Multi-node validation of satellite signals provides superior threat detection through collective intelligence across your infrastructure.</p>
+                <p>Multiple ground receivers feed live GNSS data to a unified system, enabling cross-site comparison and confidence through distributed signal validation.</p>
             </div>
             <div class="feature-card">
                 <h4>Proprietary Algorithms</h4>
-                <p>Years of research distilled into advanced RF analysis that identifies GNSS signal anomalies in real-time.</p>
+                <p>Proprietary processing and anomaly-detection algorithms analyze live GNSS data streams to identify abnormal behavior and signal degradation in real time.</p>
             </div>
             <div class="feature-card">
                 <h4>Developed in Qatar</h4>
-                <p>Engineered and tested in one of the world's most demanding GNSS environments.</p>
+                <p>Proudly engineered in Qatar, leveraging unique regional GNSS conditions to deliver globally competitive navigation integrity technology.</p>
             </div>
             <div class="feature-card">
                 <h4>Real-Time Detection</h4>
-                <p>Sub-second threat identification ensures rapid response before attacks impact operations.</p>
+                <p>Sub-second anomaly identification and alerting ensure operators gain timely insight before navigation continuity is affected.</p>
             </div>
             <div class="feature-card">
                 <h4>Comprehensive Analytics</h4>
-                <p>Deep insights into network health, threat patterns, and system performance.</p>
+                <p>Access performance trends, interference events, and system-wide GNSS behavior via intelligent dashboards.</p>
             </div>
             <div class="feature-card">
                 <h4>Scalable Architecture</h4>
-                <p>Modular design grows with your infrastructure from pilot to enterprise deployment.</p>
+                <p>From single-site airport deployments to national-scale networks, the modular framework expands to meet evolving operational needs.</p>
             </div>
         </div>
     </section>
@@ -658,7 +783,7 @@
     <section class="cta-section" id="contact">
         <div class="cta-content">
             <h2>Secure Your Infrastructure</h2>
-            <p>Join leading organizations protecting their critical operations from GNSS threats.</p>
+            <p>Join aviation and critical-infrastructure operators enhancing GNSS resilience through continous monitoring and rapid anomaly awareness.</p>
             <div class="cta-buttons" style="justify-content: center;">
                 <a href="mailto:info@stratosentinel.com" class="btn btn-primary">Request Demo</a>
                 <a href="mailto:info@stratosentinel.com" class="btn btn-secondary">Contact Us</a>
@@ -676,13 +801,13 @@
             </div>
             <div class="footer-section">
                 <h4>Products</h4>
-                <a href="#">StratoNode</a>
-                <a href="#">StratoCentral</a>
+                <a href="stratonode.html">StratoNode</a>
+                <a href="stratocentral.html">StratoCentral</a>
             </div>
             <div class="footer-section">
                 <h4>Company</h4>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
+                <a href="about.html">About</a>
+                <a href="#contact">Contact</a>
             </div>
             <div class="footer-section">
                 <h4>Industries</h4>

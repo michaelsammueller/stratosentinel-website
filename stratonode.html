@@ -4,335 +4,592 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StratoNode | GNSS Ground Station Network</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary: #00ff88;
-            --primary-glow: rgba(0, 255, 136, 0.4);
-            --secondary: #00d4ff;
-            --accent: #ff6b00;
-            --dark: #000000;
-            --dark-2: #0a0a0a;
-            --dark-3: #111111;
-            --text: #ffffff;
-            --text-muted: #888888;
-            --grid: rgba(0, 255, 136, 0.1);
+            --primary-glow: rgba(0, 255, 136, 0.3);
+            --secondary: #0066ff;
+            --dark: #0a0a0a;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --bg: #ffffff;
+            --bg-subtle: #fafafa;
         }
-        
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--text);
+            background: var(--bg-subtle);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 3rem 6rem;
+            background: var(--bg);
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        .grid-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-            background-size: 40px 40px; opacity: 0.4; z-index: 0; pointer-events: none;
-        }
-        
-        nav {
-            position: fixed; top: 0; width: 100%; background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--primary);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-        
-        .nav-container {
-            max-width: 1600px; margin: 0 auto; padding: 1.2rem 3rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem; font-weight: 700; color: var(--primary);
-            text-decoration: none; letter-spacing: 2px; text-transform: uppercase;
-            text-shadow: 0 0 20px var(--primary-glow);
-        }
-        
-        .logo::before { content: '◢'; margin-right: 0.5rem; color: var(--accent); }
-        
-        .nav-links {
-            display: flex; gap: 3rem; list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text); text-decoration: none; font-weight: 600;
-            font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1.5px;
-            transition: all 0.3s; position: relative;
-        }
-        
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 2px; background: var(--primary); transition: width 0.3s;
-        }
-        
-        .nav-links a:hover { color: var(--primary); }
-        .nav-links a:hover::after { width: 100%; }
-        
-        .hero {
-            padding: 12rem 3rem 6rem; background: radial-gradient(circle at 30% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 60%), var(--dark);
-            position: relative; z-index: 1;
-        }
-        
-        .hero-container { max-width: 1600px; margin: 0 auto; }
-        
-        .breadcrumb {
-            color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;
-            text-transform: uppercase; letter-spacing: 1.5px;
-        }
-        
-        .breadcrumb a { color: var(--primary); text-decoration: none; }
-        
+
         h1 {
-            font-size: 4.5rem; margin-bottom: 1.5rem; text-transform: uppercase;
-            letter-spacing: 3px; color: var(--primary);
-            text-shadow: 0 0 40px var(--primary-glow);
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            color: var(--text);
         }
-        
+
         .hero-description {
-            font-size: 1.4rem; color: var(--text-muted); max-width: 900px;
-            margin-bottom: 3rem; line-height: 1.8; font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 900px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
         }
-        
-        .hero-badges { display: flex; gap: 1rem; flex-wrap: wrap; }
-        
+
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
         .badge {
-            padding: 0.6rem 1.5rem; background: rgba(0, 255, 136, 0.05);
-            border: 1px solid var(--primary); color: var(--primary);
-            font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1.5px;
-            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+            padding: 0.5rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
+        /* Content Sections */
         .content-section {
-            padding: 6rem 3rem; position: relative; z-index: 1;
+            padding: 8rem 3rem;
         }
-        
-        .dark-bg { background: var(--dark-2); }
-        .darker-bg { background: var(--dark); }
-        
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        
+
+        .content-section.alternate {
+            background: var(--bg-subtle);
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            text-align: center;
+        }
+
         .section-label {
-            color: var(--primary); font-weight: 700; text-transform: uppercase;
-            letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 1.5rem;
-            display: inline-block; border: 1px solid var(--primary); padding: 0.5rem 1.5rem;
-            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .section-title {
-            font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem;
-            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
-        
+
         .section-description {
-            color: var(--text-muted); font-size: 1.2rem; max-width: 800px; margin: 0 auto;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            line-height: 1.7;
         }
-        
-        .grid-2 {
-            max-width: 1600px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-        }
-        
-        .grid-3 {
-            max-width: 1600px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+        /* Features Grid */
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
-        
+
         .feature-card {
-            background: rgba(0, 0, 0, 0.6); border: 1px solid var(--grid);
-            padding: 2.5rem; transition: all 0.3s;
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
         }
-        
+
+        .alternate .feature-card {
+            background: var(--bg);
+        }
+
         .feature-card:hover {
-            border-color: var(--primary); transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
         }
-        
+
         .feature-number {
-            font-size: 2.5rem; font-weight: 700; color: var(--primary);
-            opacity: 0.3; margin-bottom: 1rem; font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
         }
-        
+
         .feature-card h3 {
-            font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);
-            text-transform: uppercase; letter-spacing: 1px;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        
+
         .feature-card p {
-            color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.7;
         }
-        
-        .spec-grid {
-            max-width: 1600px; margin: 3rem auto 0;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+        /* Specs Grid */
+        .specs-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
-        
-        .spec-category {
-            background: rgba(0, 0, 0, 0.8); padding: 2.5rem;
-            border: 1px solid var(--grid);
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+
+        .spec-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
         }
-        
-        .spec-category h3 {
-            color: var(--primary); margin-bottom: 1.5rem; font-size: 1.4rem;
-            padding-bottom: 1rem; border-bottom: 1px solid var(--primary);
-            text-transform: uppercase; letter-spacing: 1.5px;
+
+        .alternate .spec-card {
+            background: var(--bg);
         }
-        
+
+        .spec-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
         .spec-item {
-            display: flex; justify-content: space-between; padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--bg-subtle);
         }
-        
-        .spec-item:last-child { border-bottom: none; }
-        
-        .spec-label { color: var(--text-muted); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; }
-        .spec-value { color: var(--text); font-weight: 700; text-align: right; font-family: monospace; }
-        
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .spec-value {
+            color: var(--text);
+            font-weight: 600;
+            text-align: right;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Footnote */
+        .specs-footnote {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding: 1.5rem;
+            background: var(--bg-subtle);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .specs-footnote p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Use Cases */
+        .use-cases-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .use-case-card {
-            background: rgba(0, 0, 0, 0.6); padding: 2.5rem;
-            border-left: 4px solid var(--primary); margin-bottom: 2rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
         }
-        
+
+        .alternate .use-case-card {
+            background: var(--bg);
+        }
+
         .use-case-card h3 {
-            font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);
-            text-transform: uppercase; letter-spacing: 1.5px;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        
+
         .use-case-card p {
-            color: var(--text-muted); line-height: 1.8; font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
         }
-        
-        .btn {
-            padding: 1.2rem 2.5rem; border: none; text-decoration: none;
-            font-weight: 700; font-size: 1rem; text-transform: uppercase;
-            letter-spacing: 2px; transition: all 0.3s; cursor: pointer;
-            display: inline-block; position: relative; overflow: hidden;
-        }
-        
-        .btn-primary {
-            background: var(--primary); color: var(--dark);
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 0 30px var(--primary-glow); transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: transparent; color: var(--text); border: 2px solid var(--text-muted);
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--primary); color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-        }
-        
+
+        /* CTA Section */
         .cta-section {
-            padding: 6rem 3rem; background: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 60%), var(--dark);
-            text-align: center; border-top: 1px solid var(--primary);
+            padding: 8rem 3rem;
+            text-align: center;
         }
-        
-        .cta-section h2 {
-            font-size: 3.5rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px;
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
         }
-        
-        .cta-section p {
-            font-size: 1.3rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;
+
+        .cta-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
-        
+
+        .cta-content p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text);
+        }
+
+        /* Footer */
         footer {
-            background: var(--dark); padding: 4rem 3rem 2rem;
-            border-top: 1px solid var(--primary); position: relative; z-index: 2;
+            background: var(--bg-subtle);
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid var(--border);
         }
-        
+
         .footer-content {
-            max-width: 1600px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem; margin-bottom: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
-        
+
         .footer-section h4 {
-            color: var(--primary); margin-bottom: 1.5rem; font-size: 1.2rem;
-            text-transform: uppercase; letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
-        
-        .footer-section p, .footer-section a {
-            color: var(--text-muted); text-decoration: none; display: block;
-            margin-bottom: 0.75rem; font-size: 1rem; transition: color 0.3s;
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
-        
-        .footer-section a:hover { color: var(--primary); }
-        
+
+        .footer-section a:hover {
+            color: var(--text);
+        }
+
         .footer-bottom {
-            max-width: 1600px; margin: 0 auto; padding-top: 2rem;
-            border-top: 1px solid var(--grid); text-align: center; color: var(--text-muted);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
-        
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .nav-links { display: none; }
-            .section-title { font-size: 2.5rem; }
+            h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="grid-background"></div>
-    
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">StratoSentinel</a>
+            <a href="index.html" class="logo">
+                <img src="static/sn_logo_black.svg" alt="StratoSentinel">
+            </a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stratonode.html">StratoNode</a></li>
-                <li><a href="stratocentral.html">StratoCentral</a></li>
+                <li class="dropdown">
+                    <a href="index.html#products" class="dropdown-toggle">Products</a>
+                    <div class="dropdown-menu">
+                        <a href="stratonode.html">StratoNode</a>
+                        <a href="stratocentral.html">StratoCentral</a>
+                    </div>
+                </li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <div class="breadcrumb">
-                <a href="index.html">Home</a> / StratoNode
-            </div>
-            <h1>STRATONODE</h1>
+            <div class="hero-badge">Ground Station</div>
+            <h1>StratoNode</h1>
             <p class="hero-description">
                 Intelligent GNSS relay ground stations forming a distributed sensor network for real-time threat detection and signal integrity validation across critical infrastructure.
             </p>
             <div class="hero-badges">
-                <span class="badge">MULTI-FREQUENCY GNSS</span>
-                <span class="badge">RF ANOMALY DETECTION</span>
-                <span class="badge">NETWORK CONSENSUS</span>
-                <span class="badge">24/7 MONITORING</span>
+                <span class="badge">Multi-Frequency</span>
+                <span class="badge">Multi-Constellation</span>
+                <span class="badge">Network Consensus</span>
+                <span class="badge">24/7 Monitoring</span>
             </div>
         </div>
     </section>
 
-    <section class="content-section dark-bg">
+    <!-- Features Section -->
+    <section class="content-section alternate">
         <div class="section-header">
-            <div class="section-label">SYSTEM OVERVIEW</div>
-            <h2 class="section-title">DISTRIBUTED DEFENSE ARCHITECTURE</h2>
+            <div class="section-label">System Overview</div>
+            <h2 class="section-title">Distributed Defense Architecture</h2>
             <p class="section-description">
                 StratoNodes form an interconnected network that validates GNSS integrity through distributed consensus, providing threat detection capabilities impossible with standalone systems.
             </p>
         </div>
-        <div class="grid-3">
+        <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-number">01</div>
                 <h3>RF Analysis Engine</h3>
-                <p>Proprietary algorithms analyze RF spectrum characteristics to identify spoofing and jamming attempts in real-time with sub-second detection latency.</p>
+                <p>Proprietary algorithms analyze RF spectrum characteristics to identify spoofing, jamming, and other interference attempts in real-time with sub-second detection latency.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-number">02</div>
@@ -347,12 +604,12 @@
             <div class="feature-card">
                 <div class="feature-number">04</div>
                 <h3>Rapid Detection</h3>
-                <p>Lightning-fast threat identification with detection latency under 100 milliseconds, enabling immediate response to emerging threats.</p>
+                <p>Lightning-fast threat identification with sub-second detection, enabling immediate response to emerging threats.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-number">05</div>
                 <h3>Modular Design</h3>
-                <p>Scalable architecture allows expansion from pilot deployments to enterprise-wide networks without system redesign or downtime.</p>
+                <p>Scalable architecture allows expansion from pilot deployments to enterprise-wide networks without system redesign or downtime, supporting single-station, dual-station, or multi-station deployments.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-number">06</div>
@@ -362,44 +619,49 @@
         </div>
     </section>
 
-    <section class="content-section darker-bg">
+    <!-- Specifications Section -->
+    <section class="content-section">
         <div class="section-header">
-            <div class="section-label">TECHNICAL SPECIFICATIONS</div>
-            <h2 class="section-title">MISSION-GRADE HARDWARE</h2>
+            <div class="section-label">Technical Specifications</div>
+            <h2 class="section-title">Mission-Grade Hardware</h2>
             <p class="section-description">
                 Enterprise-grade specifications designed for reliability in the most demanding operational environments.
             </p>
         </div>
-        <div class="spec-grid">
-            <div class="spec-category">
+        <div class="specs-grid">
+            <div class="spec-card">
                 <h3>GNSS Performance</h3>
                 <div class="spec-item">
                     <span class="spec-label">Constellations</span>
-                    <span class="spec-value">GPS/GLONASS/GALILEO/BEIDOU</span>
+                    <span class="spec-value">GPS/GLONASS/Galileo/BeiDou</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Augmentation Systems</span>
+                    <span class="spec-value">SBAS/QZSS/IMES/D-GPS</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Frequency Bands</span>
-                    <span class="spec-value">L1 / L2 / L5</span>
+                    <span class="spec-value">L1 / L2</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Position Accuracy</span>
-                    <span class="spec-value">&lt; 2M CEP</span>
+                    <span class="spec-value">&lt; Milimeter-level accuracy</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Update Rate</span>
-                    <span class="spec-value">10 HZ</span>
+                    <span class="spec-value">1 Hz</span>
                 </div>
             </div>
 
-            <div class="spec-category">
+            <div class="spec-card">
                 <h3>Detection Capabilities</h3>
                 <div class="spec-item">
                     <span class="spec-label">Algorithms</span>
-                    <span class="spec-value">8+ PARALLEL</span>
+                    <span class="spec-value">16+ Parallel</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Detection Time</span>
-                    <span class="spec-value">&lt; 100MS</span>
+                    <span class="spec-value">&lt; 100ms*</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">False Positive</span>
@@ -407,15 +669,15 @@
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Threat Types</span>
-                    <span class="spec-value">SPOOFING/JAMMING</span>
+                    <span class="spec-value">Spoofing/Jamming/RF Interference/Hardware Failure/No Fix</span>
                 </div>
             </div>
 
-            <div class="spec-category">
+            <div class="spec-card">
                 <h3>Environmental</h3>
                 <div class="spec-item">
-                    <span class="spec-label">Operating Temp</span>
-                    <span class="spec-value">-40°C TO +85°C</span>
+                    <span class="spec-label">Operating Temperature</span>
+                    <span class="spec-value">-40°C to +85°C</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Ingress Rating</span>
@@ -423,91 +685,100 @@
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Power</span>
-                    <span class="spec-value">12-48V DC, 15W</span>
+                    <span class="spec-value">5.1 V regulated, 3 A</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Dimensions</span>
-                    <span class="spec-value">200X150X80MM</span>
+                    <span class="spec-value">200 x 150 x 80mm</span>
                 </div>
             </div>
 
-            <div class="spec-category">
+            <div class="spec-card">
                 <h3>Connectivity</h3>
                 <div class="spec-item">
                     <span class="spec-label">Network</span>
-                    <span class="spec-value">ETHERNET / 4G/5G</span>
+                    <span class="spec-value">Ethernet / 4G/5G / WiFi</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Protocols</span>
-                    <span class="spec-value">NTRIP/RTCM/NMEA</span>
+                    <span class="spec-value">NMEA/UBX/RINEX</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Storage</span>
-                    <span class="spec-value">128GB SSD</span>
+                    <span class="spec-value">256GB SSD</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Data Logging</span>
-                    <span class="spec-value">30 DAYS ONBOARD</span>
+                    <span class="spec-value">90 Days Onboard</span>
                 </div>
             </div>
         </div>
+        <div class="specs-footnote">
+            <p>* Detection time varies based on network size and configuration. Multi-node networks with 100+ StratoNodes will still process with a speed of < 500ms</p>
+        </div>
     </section>
 
-    <section class="content-section dark-bg">
+    <!-- Use Cases Section -->
+    <section class="content-section alternate">
         <div class="section-header">
-            <div class="section-label">DEPLOYMENT SCENARIOS</div>
-            <h2 class="section-title">TACTICAL APPLICATIONS</h2>
+            <div class="section-label">Deployment Scenarios</div>
+            <h2 class="section-title">Tactical & Critical Infrastructure Applications</h2>
             <p class="section-description">
-                StratoNodes protect mission-critical infrastructure across defense, aviation, energy, and maritime sectors.
+                StratoNodes enable continous GNSS monitoring for mission-critical environments across aviation, defense, energy, and maritime sectors.
             </p>
         </div>
-        <div style="max-width: 1400px; margin: 0 auto;">
+        <div class="use-cases-container">
             <div class="use-case-card">
-                <h3>AVIATION & AIRPORTS</h3>
-                <p>Deploy across airfields to protect approach procedures, ground operations, and air traffic management. Network coverage ensures continuous monitoring of GNSS integrity for aircraft navigation and precision landing systems.</p>
+                <h3>Aviation & Airports</h3>
+                <p>Deploy across airfields to monitor GNSS integrity for approach procedures, airfield operations, and air traffic systems. Networked coverage delivers continous awareness of signal conditions that support aircraft navigation and precision landing environemnts.</p>
             </div>
             <div class="use-case-card">
-                <h3>MILITARY & DEFENSE</h3>
-                <p>Secure military installations, training ranges, and operational areas from GNSS denial attacks. Multi-node networks provide redundancy and early warning capabilities for force protection and mission assurance.</p>
+                <h3>Military & Defense</h3>
+                <p>Establish GNSS situational awareness across bases, training areas, and operational zones. Distributed receivers provide visibility into positioning signal conditions, helping detect disruptions that may affect mission readiness and force protection.</p>
             </div>
             <div class="use-case-card">
-                <h3>ENERGY INFRASTRUCTURE</h3>
-                <p>Monitor GNSS integrity across refineries, pipelines, power plants, and offshore platforms. Protect time-critical operations and ensure safety systems dependent on precise positioning and timing.</p>
+                <h3>Energy Infrastructure</h3>
+                <p>Monitor GNSS reliability across refineries, power facilities, pipelines, and offshore assets. Gain awareness of signal anomalies that may impact timing-critical operations and industrial safety systems.</p>
             </div>
             <div class="use-case-card">
-                <h3>MARITIME & PORTS</h3>
-                <p>Safeguard port operations, vessel traffic management, and autonomous shipping from GNSS interference that could disrupt maritime safety, security, and commerce operations.</p>
+                <h3>Maritime & Ports</h3>
+                <p>Oversee GNSS conditions supporting port operations, vessel movement, and coastal navigation systems. Detect interference that could affect port efficiency, maritime safety, and autonomous maritime operations.</p>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
     <section class="cta-section">
-        <h2>DEPLOY STRATONODE</h2>
-        <p>Learn how our ground station network can protect your critical GNSS infrastructure from emerging threats.</p>
-        <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-            <a href="about.html#contact" class="btn btn-primary">Request Consultation</a>
-            <a href="stratocentral.html" class="btn btn-secondary">Explore StratoCentral</a>
+        <div class="cta-content">
+            <h2>Deploy StratoNode</h2>
+            <p>Learn how our ground station network can protect your critical GNSS infrastructure from emerging threats.</p>
+            <div class="cta-buttons">
+                <a href="about.html#contact" class="btn btn-primary">Request Consultation</a>
+                <a href="stratocentral.html" class="btn btn-secondary">Explore StratoCentral</a>
+            </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>StratoSentinel</h4>
-                <p>Advanced GNSS network security for critical infrastructure protection.</p>
+                <p>Advanced GNSS network security for critical infrastructure.</p>
+                <p style="margin-top: 1rem;">Developed in Qatar</p>
             </div>
             <div class="footer-section">
-                <h4>Systems</h4>
+                <h4>Products</h4>
                 <a href="stratonode.html">StratoNode</a>
                 <a href="stratocentral.html">StratoCentral</a>
             </div>
             <div class="footer-section">
-                <h4>Command</h4>
-                <a href="about.html">Mission Brief</a>
+                <h4>Company</h4>
+                <a href="about.html">About</a>
                 <a href="about.html#contact">Contact</a>
             </div>
             <div class="footer-section">
-                <h4>Sectors</h4>
+                <h4>Industries</h4>
                 <a href="#">Aviation</a>
                 <a href="#">Defense</a>
                 <a href="#">Energy</a>
@@ -515,7 +786,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 StratoSentinel. QATAR ENGINEERING. All Rights Reserved.</p>
+            <p>&copy; 2025 StratoSentinel. All rights reserved.</p>
         </div>
     </footer>
 </body>
