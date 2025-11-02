@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Roadmap | StratoSentinel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --primary-glow: rgba(0, 255, 136, 0.3);
+            --secondary: #0066ff;
+            --dark: #0a0a0a;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --bg: #ffffff;
+            --bg-subtle: #fafafa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--text);
+            background: var(--bg-subtle);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 3rem 6rem;
+            text-align: center;
+            background: var(--bg);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            color: var(--text);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 6rem 3rem;
+        }
+
+        .content-section.alternate {
+            background: var(--bg-subtle);
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 4rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: -4rem;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--border) 100%);
+        }
+
+        .timeline-item:last-child::before {
+            background: linear-gradient(180deg, var(--primary) 0%, transparent 100%);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 8px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .timeline-period {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .timeline-content {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .alternate .timeline-content {
+            background: var(--bg);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-subtle);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(8px);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--secondary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .status-badge.completed {
+            background: rgba(0, 255, 136, 0.15);
+            color: #00a85f;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .status-badge.completed::before {
+            content: '✓ ';
+            font-weight: 900;
+        }
+
+        .status-badge.in-progress {
+            background: rgba(255, 170, 0, 0.15);
+            color: #d97706;
+            border: 1px solid rgba(255, 170, 0, 0.3);
+        }
+
+        .status-badge.in-progress::before {
+            content: '◐ ';
+        }
+
+        .status-badge.planned {
+            background: rgba(100, 100, 100, 0.1);
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .feature-item.completed {
+            background: rgba(0, 255, 136, 0.03);
+            border-left: 3px solid var(--primary);
+        }
+
+        .feature-item.in-progress {
+            background: rgba(255, 170, 0, 0.03);
+            border-left: 3px solid #ffaa00;
+        }
+
+        /* Legend */
+        .legend {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 1.5rem;
+            background: var(--bg-subtle);
+            border-radius: 12px;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .legend-icon.stratonode {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .legend-icon.stratocentral {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .legend-icon.platform {
+            background: #9333ea;
+            color: white;
+        }
+
+        .legend-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .legend-divider {
+            width: 1px;
+            height: 30px;
+            background: var(--border);
+            margin: 0 0.5rem;
+        }
+
+        .legend-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.25rem;
+        }
+
+        .legend-status.completed {
+            background: #00a85f;
+        }
+
+        .legend-status.in-progress {
+            background: #d97706;
+        }
+
+        .legend-status.planned {
+            background: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-subtle);
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .timeline-item {
+                padding-left: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .legend {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="static/sn_logo_black.svg" alt="StratoSentinel">
+            </a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html#products" class="dropdown-toggle">Products</a>
+                    <div class="dropdown-menu">
+                        <a href="stratonode.html">StratoNode</a>
+                        <a href="stratocentral.html">StratoCentral</a>
+                    </div>
+                </li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="about.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">Product Vision</div>
+        <h1>Development Roadmap</h1>
+        <p class="hero-description">
+            Our commitment to continuous innovation and improvement. Explore upcoming features, enhancements, and long-term vision for the StratoSentinel platform.
+        </p>
+    </section>
+
+    <!-- Roadmap Timeline -->
+    <section class="content-section">
+        <div class="timeline-container">
+            <!-- Q4 2025 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-period">Q4 2025 - Current</div>
+                <div class="timeline-content">
+                    <h3>Foundation & Core Capabilities</h3>
+                    <div class="feature-list">
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--primary);">SN</div>
+                            <div class="feature-content">
+                                <h4>Multi-Constellation Support</h4>
+                                <p>GPS, GLONASS, Galileo, and BeiDou tracking with L1/L2 frequency band support</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Role-Based Access Control</h4>
+                                <p>Granular permissions for operators, administrators, and read-only users</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>16+ Detection Algorithms</h4>
+                                <p>Parallel anomaly detection with weighted consensus voting</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Real-Time Network Dashboard</h4>
+                                <p>Interactive map visualization with live node status and signal quality metrics</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Visual Alert System</h4>
+                                <p>Automated anomaly indication through node markers and zone-layer visualization</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item completed">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>90-Day Data Storage</h4>
+                                <p>Rolling historical data with trend analysis and event review capabilities</p>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+                        <div class="feature-item in-progress">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Constellation Analysis</h4>
+                                <p>Constellation-specific anomaly detection</p>
+                            </div>
+                            <span class="status-badge in-progress">In Progress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q1 2026 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-period">Q1 2026</div>
+                <div class="timeline-content">
+                    <h3>Enhanced Integration & Automation</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>External Notification Channels</h4>
+                                <p>Email and SMS alert delivery for critical anomaly events</p>
+                            </div>
+                            <span class="status-badge planned">Planned</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Advanced Map Layer Selection & Creation</h4>
+                                <p>Allow user to create and manage map layers</p>
+                            </div>
+                            <span class="status-badge planned">Planned</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Advanced REST API</h4>
+                                <p>Enhanced API endpoints for third-party integrations and data access</p>
+                            </div>
+                            <span class="status-badge planned">Planned</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--primary);">SN</div>
+                            <div class="feature-content">
+                                <h4>Enhanced Environmental Hardening</h4>
+                                <p>Extended temperature range and improved weatherproofing for extreme deployments</p>
+                            </div>
+                            <span class="status-badge planned">Planned</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: #9333ea;">PT</div>
+                            <div class="feature-content">
+                                <h4>Automated Reporting</h4>
+                                <p>Scheduled PDF/CSV reports for network health and anomaly summaries</p>
+                            </div>
+                            <span class="status-badge planned">Planned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 2026 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-period">Q2 2026</div>
+                <div class="timeline-content">
+                    <h3>Enterprise Features & Scalability</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>SSO / SAML Authentication</h4>
+                                <p>Enterprise identity integration for secure organizational access</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>SIEM Integration</h4>
+                                <p>Forward GNSS events to Splunk, QRadar, and other security platforms</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--primary);">SN</div>
+                            <div class="feature-content">
+                                <h4>OTA Firmware Updates</h4>
+                                <p>Remote firmware deployment and configuration management</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 2026 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-period">Q3 2026</div>
+                <div class="timeline-content">
+                    <h3>Advanced Analytics & Intelligence</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Machine Learning Detection</h4>
+                                <p>AI-powered anomaly recognition trained on network-wide patterns</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Predictive Analytics</h4>
+                                <p>Forecast potential GNSS disruptions based on historical trends</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Webhook Support</h4>
+                                <p>Real-time event streaming to external systems via HTTP callbacks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 2026+ -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-period">Q4 2026+</div>
+                <div class="timeline-content">
+                    <h3>Long-Term Vision</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--primary);">SN</div>
+                            <div class="feature-content">
+                                <h4>L5 Band Support</h4>
+                                <p>Extended frequency coverage for enhanced signal analysis</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: var(--secondary);">SC</div>
+                            <div class="feature-content">
+                                <h4>Advanced Threat Intelligence</h4>
+                                <p>Collaborative threat database and pattern sharing across deployments</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: #9333ea;">PT</div>
+                            <div class="feature-content">
+                                <h4>Compliance Frameworks</h4>
+                                <p>Built-in reporting for aviation, defense, and energy regulatory standards</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon" style="background: #9333ea;">PT</div>
+                            <div class="feature-content">
+                                <h4>Mobile Application</h4>
+                                <p>iOS/Android app for on-the-go network monitoring and alerts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <span class="legend-title">Product:</span>
+                <div class="legend-item">
+                    <div class="legend-icon stratonode">SN</div>
+                    <span class="legend-text">StratoNode</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon stratocentral">SC</div>
+                    <span class="legend-text">StratoCentral</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon platform">PT</div>
+                    <span class="legend-text">Platform</span>
+                </div>
+
+                <div class="legend-divider"></div>
+
+                <span class="legend-title">Status:</span>
+                <div class="legend-item">
+                    <span class="legend-status completed"></span>
+                    <span class="legend-text">Completed</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-status in-progress"></span>
+                    <span class="legend-text">In Progress</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-status planned"></span>
+                    <span class="legend-text">Planned</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>StratoSentinel</h4>
+                <p>Advanced GNSS network security for critical infrastructure.</p>
+                <p style="margin-top: 1rem;">Developed in Qatar 🇶🇦</p>
+            </div>
+            <div class="footer-section">
+                <h4>Products</h4>
+                <a href="stratonode.html">StratoNode</a>
+                <a href="stratocentral.html">StratoCentral</a>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="about.html">About</a>
+                <a href="roadmap.html">Roadmap</a>
+                <a href="about.html#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Industries</h4>
+                <a href="#">Aviation</a>
+                <a href="#">Defense</a>
+                <a href="#">Energy</a>
+                <a href="#">Maritime</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 StratoSentinel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

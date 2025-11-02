@@ -561,6 +561,7 @@
                         <a href="stratocentral.html">StratoCentral</a>
                     </div>
                 </li>
+                <li><a href="roadmap.html">Roadmap</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="about.html#contact">Contact</a></li>
             </ul>
@@ -633,21 +634,21 @@
             <div class="section-label">Alert Protocol</div>
             <h2 class="section-title">Multi-Tier Threat Response</h2>
             <p class="section-description">
-                Intelligent classification system ensures appropriate responses to different threat levels while minimizing alert fatigue.
+                Confidence-based classification system utilizing weighted algorithm voting and multi-station consensus to ensure appropriate responses while minimizing false alerts.
             </p>
         </div>
         <div class="alert-grid">
             <div class="alert-card info">
-                <h4>Informational</h4>
-                <p>Normal operational events, node status changes, and routine maintenance notifications for continuous situational awareness.</p>
+                <h4>Low Confidence</h4>
+                <p>Event recorded for monitoring and trend tracking. No operator action required.</p>
             </div>
             <div class="alert-card warning">
-                <h4>Warning</h4>
-                <p>Potential anomalies detected requiring attention. May indicate developing threats or system performance degradation.</p>
+                <h4>Medium Confidence</h4>
+                <p>Elevated signal behavior detected. Operator awareness recommended.</p>
             </div>
             <div class="alert-card critical">
-                <h4>Critical</h4>
-                <p>Confirmed GNSS threats including active spoofing or jamming requiring immediate tactical response and investigation.</p>
+                <h4>High Confidence</h4>
+                <p>Significant deviation identified. Immediate operator attention prompted.</p>
             </div>
         </div>
     </section>
@@ -664,27 +665,27 @@
         <div class="integration-grid">
             <div class="integration-card">
                 <h4>REST API</h4>
-                <p>Comprehensive API for custom integrations and automation</p>
+                <p>Secure API endpoints for data access and system integration</p>
             </div>
             <div class="integration-card">
-                <h4>Email / SMS</h4>
-                <p>Direct notification delivery to key personnel</p>
+                <h4>Alert Channels</h4>
+                <p>In-platform visual alerts with support for external notification workflows</p>
             </div>
             <div class="integration-card">
-                <h4>SIEM</h4>
-                <p>Forward alerts to security information platforms</p>
+                <h4>SIEM Integration</h4>
+                <p>Forward event data to security and monitoring platforms (Roadmap)</p>
             </div>
             <div class="integration-card">
                 <h4>Webhooks</h4>
-                <p>Real-time event streaming to external systems</p>
+                <p>Real-time data hooks for external system connectivity (Roadmap)</p>
             </div>
             <div class="integration-card">
                 <h4>Data Export</h4>
-                <p>Flexible export for external analysis</p>
+                <p>Downloadable event and performance records for external review</p>
             </div>
             <div class="integration-card">
                 <h4>SSO / SAML</h4>
-                <p>Enterprise authentication integration</p>
+                <p>Enterprise authentication support (Roadmap)</p>
             </div>
         </div>
     </section>
