@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | StratoSentinel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --primary-glow: rgba(0, 255, 136, 0.3);
+            --secondary: #0066ff;
+            --dark: #0a0a0a;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --bg: #ffffff;
+            --bg-subtle: #fafafa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--text);
+            background: var(--bg-subtle);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 3rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 255, 136, 0.08) 0%,
+                rgba(0, 255, 136, 0.04) 25%,
+                rgba(0, 255, 136, 0.02) 50%,
+                transparent 70%
+            );
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Content Section */
+        section {
+            padding: 4rem 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Featured Publication */
+        .featured-publication {
+            background: var(--bg);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-publication::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .publication-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .publication-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .publication-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: none;
+        }
+
+        /* Publications Grid */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .publication-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .publication-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .publication-type {
+            display: inline-block;
+            background: var(--bg-subtle);
+            color: var(--text-light);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .publication-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .publication-card .publication-meta {
+            margin-bottom: 1rem;
+            gap: 1.5rem;
+        }
+
+        .publication-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-subtle);
+            padding: 3rem 3rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-header {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .featured-publication {
+                padding: 2rem;
+            }
+
+            .publication-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="static/sn_logo_black.svg" alt="StratoSentinel">
+            </a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#products" class="dropdown-toggle">Products</a>
+                    <div class="dropdown-menu">
+                        <a href="stratonode.html">StratoNode</a>
+                        <a href="stratocentral.html">StratoCentral</a>
+                    </div>
+                </li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="about.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Research & Publications</h1>
+        <p>Advancing GNSS security through rigorous research, innovation, and open knowledge sharing.</p>
+    </section>
+
+    <!-- Featured Publication -->
+    <section>
+        <div class="container">
+            <div class="featured-publication">
+                <span class="featured-badge">Featured Publication</span>
+                <h2 class="publication-title">Master's Thesis: Where are we? Investigating how inexpensive technology can mitigate GPS spoofing</h2>
+                <div class="publication-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Author:</span>
+                        <span>Michael Sammueller</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Institution:</span>
+                        <span>University of Essex</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Year:</span>
+                        <span>2024</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Type:</span>
+                        <span>Master's Thesis</span>
+                    </div>
+                </div>
+                <p class="publication-description">
+                    This thesis investigates the potential of using inexpensive technology to mitigate GPS spoofing, a critcal threat to civil aviation.
+                    The research focuses on developing and testing a low-cost, scalable solution referred to as the "Smart GPS Receiver". The study employs
+                    a Design Science Research (DSR) paradigm combined with Agile methodology to iteratively design, implement, and evaluate the receiver.
+                </p>
+                <div class="card-actions">
+                    <a href="static/publications/masters-thesis.pdf" class="btn" download>
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12.5a.75.75 0 01-.75-.75V4.5a.75.75 0 011.5 0v7.25a.75.75 0 01-.75.75z"/>
+                            <path d="M6.75 9.25a.75.75 0 01.53 1.28l2.72 2.72 2.72-2.72a.75.75 0 111.06 1.06l-3.25 3.25a.75.75 0 01-1.06 0l-3.25-3.25a.75.75 0 01.53-1.28z"/>
+                            <path d="M3.5 15.25a.75.75 0 01.75-.75h11.5a.75.75 0 010 1.5H4.25a.75.75 0 01-.75-.75z"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                    <a href="#cite" class="btn btn-outline btn-small">Cite This Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Publications -->
+    <section style="background: var(--bg-subtle);">
+        <div class="container">
+            <h2 class="section-title">Other Publications</h2>
+            <p class="section-subtitle">Additional research papers, conference proceedings, and technical reports</p>
+
+            <div class="publications-grid">
+                <!-- Publication Card Template -->
+                <!--
+                <div class="publication-card">
+                    <span class="publication-type">Conference Paper</span>
+                    <h3>[Publication Title]</h3>
+                    <div class="publication-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Year:</span>
+                            <span>[Year]</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Venue:</span>
+                            <span>[Conference/Journal Name]</span>
+                        </div>
+                    </div>
+                    <p>[Brief description of the publication, its contributions, and key findings.]</p>
+                    <div class="card-actions">
+                        <a href="static/publications/paper-1.pdf" class="btn btn-small" download>Download PDF</a>
+                        <a href="#" class="btn btn-outline btn-small">Abstract</a>
+                    </div>
+                </div>
+
+                <div class="publication-card">
+                    <span class="publication-type">Journal Article</span>
+                    <h3>[Publication Title]</h3>
+                    <div class="publication-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Year:</span>
+                            <span>[Year]</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Journal:</span>
+                            <span>[Journal Name]</span>
+                        </div>
+                    </div>
+                    <p>[Brief description of the publication, its contributions, and key findings.]</p>
+                    <div class="card-actions">
+                        <a href="static/publications/paper-2.pdf" class="btn btn-small" download>Download PDF</a>
+                        <a href="#" class="btn btn-outline btn-small">Abstract</a>
+                    </div>
+                </div>
+
+                <div class="publication-card">
+                    <span class="publication-type">Technical Report</span>
+                    <h3>[Report Title]</h3>
+                    <div class="publication-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Year:</span>
+                            <span>[Year]</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Publisher:</span>
+                            <span>[Organization]</span>
+                        </div>
+                    </div>
+                    <p>[Brief description of the technical report and its practical applications.]</p>
+                    <div class="card-actions">
+                        <a href="static/publications/report-1.pdf" class="btn btn-small" download>Download PDF</a>
+                        <a href="#" class="btn btn-outline btn-small">Abstract</a>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section id="cite">
+        <div class="container">
+            <h2 class="section-title">How to Cite</h2>
+            <p class="section-subtitle">BibTeX citation for the Master's Thesis</p>
+
+            <div class="publication-card" style="max-width: 800px; margin: 0 auto; background: var(--bg-subtle); font-family: 'Courier New', monospace;">
+                <pre style="white-space: pre-wrap; color: var(--text); line-height: 1.8;">@mastersthesis{sammueller2024thesis,
+  title        = {Where are we? Investigating how inexpensive technology can
+                  mitigate GPS spoofing},
+  author       = {Sammueller, Michael},
+  year         = {2024},
+  school       = {University of Essex},
+  type         = {Master's Thesis},
+  address      = {Colchester, United Kingdom},
+  note         = {Available at: https://stratosentinel.com/research}
+}</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>StratoSentinel</h4>
+                <p>Advanced GNSS network security for critical infrastructure.</p>
+                <p style="margin-top: 1rem;">Developed in Qatar 🇶🇦</p>
+            </div>
+            <div class="footer-section">
+                <h4>Products</h4>
+                <a href="stratonode.html">StratoNode</a>
+                <a href="stratocentral.html">StratoCentral</a>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="about.html">About</a>
+                <a href="roadmap.html">Roadmap</a>
+                <a href="research.html">Research</a>
+                <a href="about.html#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="static/publications/masters-thesis.pdf" download>Master's Thesis</a>
+                <a href="#cite">Citation</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 StratoSentinel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
